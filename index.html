@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="./dist/carousel.css">
+    <script src="./dist/carousel.js"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section>
+        <div class="container section-title">
+            <h1>#1 - Classic Carousel</h1>
+        </div>
+        <div id="carousel-example-1">
+            <div class="color-1st h-70">
+                <div class="flex-center h-100">
+                    <h1>Slide nº1</h1>
+                </div>
+            </div>
+            <div class="color-2nd h-70">
+                <div class="flex-center h-100">
+                    <h1>Slide nº2</h1>
+                </div>
+            </div>
+            <div class="color-3rd h-70">
+                <div class="flex-center h-100">
+                    <h1>Slide nº3</h1>
+                </div>
+            </div>
+            <div class="color-4th h-70">
+                <div class="flex-center h-100">
+                    <h1>Slide nº4</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container section-title">
+            <h1>#2 - Slide Carousel</h1>
+        </div>
+        <div>
+            <div id="carousel-example-2">
+                <div>
+                    <div class="flex-center h-20 color-1st">
+                        <h1>Slide nº1</h1>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex-center h-20 color-2nd">
+                        <h1>Slide nº2</h1>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex-center h-20 color-3rd">
+                        <h1>Slide nº3</h1>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex-center h-20 color-4th">
+                        <h1>Slide nº4</h1>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex-center h-20 color-5th">
+                        <h1>Slide nº5</h1>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex-center h-20 color-6th">
+                        <h1>Slide nº6</h1>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex-center h-20 color-7th">
+                        <h1>Slide nº7</h1>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex-center h-20 color-8th">
+                        <h1>Slide nº8</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <script>
+
+        const carouselTest1 = new Carousel('#carousel-example-1')
+        carouselTest1.build()
+
+        const carouselTest2 = new Carousel('#carousel-example-2')
+        carouselTest2.build({type: 'slide'})
+    </script>
+
+<!-- Example: How to use 'module' in HTML
+    <script type="module">
+        import { Carousel } from "./main.js"
+        const carousel = new Carousel('#carousel-test')
+    </script> -->
+</body>
+</html>

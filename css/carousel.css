@@ -1,0 +1,213 @@
+*,
+*::before,
+*::after {
+    overflow-x: hidden !important;
+
+    --size-carousel-nav-item: 64px;
+    --size-padding-x-card: .7rem;
+    --slide-padding-x: 2rem;
+
+    --slide-items-per-row: 2;
+}
+
+@media (min-width: 70em) {
+    *,
+    *::before,
+    *::after {
+        --slide-items-per-row: 4;
+    }
+}
+
+.carousel {
+    position: relative;
+    height: 100%;
+    z-index: 1;
+}
+
+.carousel-classic {
+    position: relative;
+    width: 100%;
+    height: var(--height-child);
+    z-index: -1;
+}
+
+.carousel-item-classic {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    left: -100%;
+}
+.carousel-item-classic[data-status='moving'] {
+    display: block;
+}
+.carousel-item-classic[data-status='active'] {
+    display: block;
+    left: 0;
+}
+.carousel-item-classic[data-animation='to-left'] {
+    animation: to_left 300ms;
+}
+.carousel-item-classic[data-animation='from-left'] {
+    animation: from_left 300ms;
+}
+.carousel-item-classic[data-animation='to-right'] {
+    display: block;
+    animation: to_right 300ms;
+}
+.carousel-item-classic[data-animation='from-right'] {
+    animation: from_right 300ms;
+}
+/* Animation to 'carousel-item-classic' */
+@keyframes to_left {
+    0% {left: 0%}
+    100% {left: -100%;}
+}
+
+@keyframes from_left {
+    0% {left: 100%}
+    100% {left: 0%;}
+}
+
+@keyframes to_right {
+    0% {left: 0%}
+    100% {left: 100%;}
+}
+
+@keyframes from_right {
+    0% {left: -100%}
+    100% {left: 0%;}
+}
+
+.carousel-slide {
+    padding: 0 calc(var(--slide-padding-x) * 2);
+}
+
+.carousel-item-slide {
+    width: calc(100% / var(--slide-items-per-row));
+    padding: 0 var(--size-padding-x-card);
+
+    flex-shrink: 0;
+
+    transform: translateX(calc(var(--slide-to-left, 0) * 1%));
+    transition: 500ms transform ease-in-out;
+}
+
+.carousel-navigation-item {
+    position: absolute;
+    width: var(--size-carousel-nav-item);
+    height: var(--size-carousel-nav-item);
+
+    cursor: pointer;
+    border-radius: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: 200ms all ease-in;
+
+    background-color: rgb(222, 221, 221);
+    color: inherit;
+}
+
+
+@media (min-width: 70em) {
+    .carousel-navigation-item{
+        background-color: transparent;
+        color: transparent;
+    }
+
+    .carousel-navigation-item[data-visible='true'] {
+        background-color: rgb(222, 221, 221);
+        /* box-shadow: calc(var(--side-shadow, 1) * -3px) 0px 7px #00000021; */
+        color: inherit;
+    }
+}
+
+.carousel-navigation-item > div {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.half-left,
+.half-right {
+    width: calc(var(--size-carousel-nav-item) / 2);
+}
+
+.half-left {
+    border-radius: var(--size-carousel-nav-item) 0 0 var(--size-carousel-nav-item);
+}
+
+.half-right {
+    border-radius: 0 var(--size-carousel-nav-item) var(--size-carousel-nav-item) 0;
+}
+
+.carousel-left {
+    left: 0;
+}
+
+.carousel-right {
+    right: 0;
+}
+
+.card-top-fixed {
+    top: calc(var(--size-product-card-height) / 2);
+}
+
+.card-left-fixed {
+    left: calc(var(--size-carousel-nav-item) / 2 + var(--size-padding-x-card));
+}
+
+.card-right-fixed {
+    right: calc(var(--size-carousel-nav-item) / 2 + var(--size-padding-x-card));
+}
+
+@media (min-width: 70em) {
+    .card-left-fixed {
+        left: calc(var(--size-carousel-nav-item) / 2);
+    }
+
+    .card-right-fixed {
+        right: calc(var(--size-carousel-nav-item) / 2);
+    }
+}
+
+.carousel-navigation-arrow {
+    position: absolute;
+    right: var(--right-position, none);
+    left: var(--left-position, none);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: calc(var(--size-carousel-nav-item) * .375);
+}
+
+.carousel-bullets {
+    position: absolute;
+    width: 80px;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.carousel-bullets > div {
+    width: 8px;
+    height: 8px;
+    border: 1px solid white;
+    border-radius: 100%;
+    cursor: pointer;
+    transition: 500ms;
+}
+
+.carousel-bullets > div[data-active='true'] {
+    background-color: rgba(255, 255, 255, 0.616);
+    width: 12px;
+    height: 12px;
+}
+
+.slide-row {
+    display: flex;
+    flex-direction: row;
+}

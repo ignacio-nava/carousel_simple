@@ -1,0 +1,16 @@
+{
+  "name": "carousel_simple",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "esbuild-watch": "esbuild ./index.js --bundle --outfile=./dist/carousel.js --format=esm --watch",
+    "css-dist": "cp ./css/carousel.css ./dist/" 
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "0.20.0"
+  }
+}

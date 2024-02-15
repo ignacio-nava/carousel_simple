@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "esbuild-watch": "esbuild ./index.js --bundle --outfile=./dist/carousel.js --format=esm --watch",
-    "css-dist": "cp ./css/carousel.css ./dist/" 
+    "esbuild-watch": "esbuild ./index.js --bundle --outfile=./dist/carousel.js --format=esm --watch"
   },
   "keywords": [],
   "author": "",

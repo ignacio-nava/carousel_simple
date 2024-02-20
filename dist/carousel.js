@@ -237,9 +237,47 @@ var bulletsStructure = {
   }
 };
 
+// carousel/tools/actions.js
+function moveCarouselLoop(element) {
+  if (element.config.type != "loop")
+    return;
+  let delta = 0;
+  let width = element.itemsContainer.offsetWidth;
+  let speed = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--loop-speed");
+  let delay = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--loop-delay");
+  element.itemsContainerClone.style = `--left-position: ${width}px`;
+  function moveCarousel() {
+    delta = Math.abs(delta) >= width ? 0 : delta - speed;
+    element.itemsContainer.style = `--left-position: ${delta}px`;
+    element.itemsContainerClone.style = `--left-position: ${width + delta}px`;
+  }
+  function hover() {
+    clearInterval(carouselInterval);
+  }
+  function unhover() {
+    carouselInterval = setInterval(moveCarousel, delay);
+  }
+  element.loop.addEventListener("mouseenter", hover);
+  element.loop.addEventListener("mouseleave", unhover);
+  let carouselInterval = setInterval(moveCarousel, delay);
+  window.addEventListener("resize", () => {
+    width = element.itemsContainer.offsetWidth;
+    speed = getComputedStyle(
+      document.documentElement
+    ).getPropertyValue("--loop-speed");
+    delay = getComputedStyle(
+      document.documentElement
+    ).getPropertyValue("--loop-delay");
+  });
+}
+
 // carousel/types/types.js
 var constructorByTypes = {
-  "classic": (element) => {
+  classic: (element) => {
     element._restructure();
     element._setActiveItem(element.config.initialIndex, true);
     if (element.config.navigators) {
@@ -250,31 +288,50 @@ var constructorByTypes = {
     }
     ["mouseenter", "mouseleave"].forEach((listener) => element.carousel.addEventListener(listener, (e) => element._setNavigationHoverAnimation(e)));
   },
-  "slide": (element) => {
+  slide: (element) => {
     element._restructure();
+    element.slider = document.createElement("div");
+    element.slider.classList.add("flex-row");
     const itemsCopy = [...element.carouselItems];
     for (let i = 0; i < itemsCopy.length; i++) {
       const item = itemsCopy[i];
       element.carouselItemsDiv.removeChild(item);
-    }
-    element.slider = document.createElement("div");
-    element.slider.classList.add("slide-row");
-    for (let i = 0; i < itemsCopy.length; i++) {
-      const item = itemsCopy[i];
-      item.setAttribute("data-index", i);
       element.slider.appendChild(item);
     }
     element.carouselItemsDiv.appendChild(element.slider);
-    element.carouselItems = element.carouselItems[0].children;
     if (element.config.navigators) {
       element._buildElement(navigationStructure[element.config.navigators]);
     }
     ["mouseenter", "mouseleave"].forEach((listener) => element.carouselItemsDiv.addEventListener(listener, (e) => element._setNavigationHoverAnimation(e)));
+  },
+  loop: (element) => {
+    element._restructure();
+    element.loop = document.createElement("div");
+    element.loop.classList = "loop-container flex-row";
+    element.itemsContainer = document.createElement("div");
+    element.itemsContainerClone = document.createElement("div");
+    const itemsCopy = [...element.carouselItems];
+    for (let i = 0; i < itemsCopy.length; i++) {
+      const item = itemsCopy[i];
+      element.carouselItemsDiv.removeChild(item);
+      element.itemsContainer.appendChild(item);
+      element.itemsContainerClone.appendChild(item.cloneNode(true));
+    }
+    element.itemsContainer.dataset.identity = "original";
+    element.itemsContainer.classList = "loop-item-container flex-row";
+    element.itemsContainerClone.dataset.identity = "clone";
+    element.itemsContainerClone.classList = "loop-item-container flex-row";
+    element.loop.appendChild(element.itemsContainer);
+    element.loop.appendChild(element.itemsContainerClone);
+    element.loop.style = `--items-count-loop: ${element.itemsContainer.childElementCount}`;
+    element.carouselItemsDiv.appendChild(element.loop);
+    moveCarouselLoop(element);
   }
 };
 var carouselTypes = {
   classic: (option) => option === false ? option : "classic",
-  slide: (option) => option === false ? option : "slide"
+  slide: (option) => option === false ? option : "slide",
+  loop: (option) => option === false ? option : "loop"
 };
 var navigationEvents = {
   mouseenter: (navigator) => {
@@ -290,7 +347,7 @@ var navigationEvents = {
 var Carousel = class {
   /**
   * Creates an instance of Carousel.
-  * @author: - ignacionava y rufina
+  * @author: - ignacionava
   * @param { string } selector - The HTML element where to build the carousel.
   * @param { number } [timerAuto=7000] - Time slide is ms. Default: 7000.
   */

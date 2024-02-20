@@ -5,14 +5,13 @@ import {
     navigationEvents
  } from "./types/types.js";
 
-
 // Main Object 
 /** @class Carousel representing a carousel */
 export class Carousel {
 
     /**
     * Creates an instance of Carousel.
-    * @author: - ignacionava y rufina
+    * @author: - ignacionava
     * @param { string } selector - The HTML element where to build the carousel.
     * @param { number } [timerAuto=7000] - Time slide is ms. Default: 7000.
     */
@@ -46,7 +45,7 @@ export class Carousel {
             navigators: carouselTypes[this.config.type](config.navigators),
             bullets: carouselTypes[this.config.type](config.bullets)
         }
-
+        
         await constructorByTypes[this.config.type](this)
     }
 

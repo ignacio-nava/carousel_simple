@@ -6,8 +6,13 @@
     --size-carousel-nav-item: 64px;
     --size-padding-x-card: .7rem;
     --slide-padding-x: 2rem;
-
     --slide-items-per-row: 2;
+
+    /* Mobile mode */
+    --loop-speed: 1;
+    --loop-delay: 10;
+    /* ---------- */
+    --loop-items-per-row: 2;
 }
 
 @media (min-width: 70em) {
@@ -15,6 +20,12 @@
     *::before,
     *::after {
         --slide-items-per-row: 4;
+
+        /* Screen mode */
+        --loop-speed: 1;
+        --loop-delay: 10;
+        /* ---------- */
+        --loop-items-per-row: 4;
     }
 }
 
@@ -84,6 +95,8 @@
 }
 
 .carousel-item-slide {
+    cursor: pointer;
+
     width: calc(100% / var(--slide-items-per-row));
     padding: 0 var(--size-padding-x-card);
 
@@ -207,7 +220,31 @@
     height: 12px;
 }
 
-.slide-row {
+.flex-row {
     display: flex;
     flex-direction: row;
+}
+
+.loop-container {
+    height: var(--height-child);
+    width: calc(100% * (var(--items-count-loop) / var(--loop-items-per-row)))
+}
+
+.loop-item-container {
+    position: absolute;
+    width: calc(100% * (var(--items-count-loop) / var(--loop-items-per-row)))
+}
+
+.loop-item-container[data-identity="original"] {
+    left: var(--left-position, 0px);
+}
+.loop-item-container[data-identity="clone"] {
+    left: var(--left-position, 0px);
+}
+
+.carousel-item-loop {
+    cursor: pointer;
+    
+    width: calc(100% / var(--slide-items-per-row));
+    padding: 0 var(--size-padding-x-card);
 }
